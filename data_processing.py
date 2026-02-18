@@ -21,6 +21,8 @@ def remove_fully_null_columns_rows():
     Remove columns that are completely null
     Return a new DataFrame object
     """
+    df_raw = df_raw.dropna(how="all")
+    df_raw = df_raw.dropna(axis="columns", how="all")
     return 1
 
 def clean_and_fill_content_rating():
