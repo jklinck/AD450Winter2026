@@ -12,7 +12,7 @@ def rename_columns(df_raw):
     I noticed you need to use strip() before replace otherwise it would replace any 
     leading or trailing spaces with a _
     """
-    df.raw
+    df_raw.rename(columns={"original_titlê":"original_title", "Genrë¨":"genre", "Unnamed:_8":"unnamed_8"}, inplace=True)
     df_raw.columns = df_raw.columns.str.strip()
     df_raw.columns = df_raw.columns.str.replace(' ', '_')
     df_raw.columns = df_raw.columns.str.lower()
@@ -47,11 +47,8 @@ def clean_release_year(df_raw):
     Add new column "release_year_mixed", use pd.to_datetime with errors="coerce" and format="mixed"
     Return a new DataFrame object
     """
-    df_raw["release_year_coerce"] = pd.to_datetime(
-        df_raw["release_year"], 
-        erorrs="coerce")
-    
-    df_raw["release_year_mixed"] = pd.to_datetime(df_raw["release_year"], erorrs="coerce", format="mixed", dayfist=True)
+    df_raw["release_year_coerce"] = pd.to_datetime(df_raw["release_year"], errors="coerce")
+    df_raw["release_year_mixed"] = pd.to_datetime(df_raw["release_year"], errors="coerce", format="mixed", dayfirst=True)
     return df_raw
 
 # Problem #5
@@ -60,9 +57,8 @@ def clean_income(df_raw):
     Remove $, commas and other issues and covert to an int
     Return a new DataFrame object
     """
-    df_raw["income"] = df_raw["income"].str.replace(f'[$]',regex=True)
+    df_raw["income"] = df_raw["income"].str.replace(r'[$,]','', regex=True)
     df_raw["income"] = df_raw["income"].str.replace('o', '0', regex=False)
-    df_raw["income"] = df_raw["income"].str.replace('0', '0', reges=False)
     df_raw["income"] = df_raw["income"].astype("Int64")
     return df_raw
 
