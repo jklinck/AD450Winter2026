@@ -5,8 +5,14 @@ def rename_columns(df_raw):
     Convert everything into lower case
     Remove trailing and leading spaces
     Return a new DataFrame object
+
+    I noticed you need to use strip() before replace otherwise it would replace any 
+    leading or trailing spaces with a _
     """
-    return 1
+    df_raw.columns = df_raw.columns.str.strip()
+    df_raw.columns = df_raw.columns.str.replace(' ', '_')
+    df_raw.columns = df_raw.columns.str.lower()
+    return df_raw
 
 def remove_fully_null_columns_rows():
     """
