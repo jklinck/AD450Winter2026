@@ -4,8 +4,16 @@ import pandas as pd
 
 def create_data():
     np.random.seed(10)
-    word_file = "/usr/share/dict/words"
-    WORDS = open(word_file).read().splitlines()
+    """
+    /usr/share/dict/words cannot be found so I created the try/except block below
+    and hard coded an array of names in the except block
+    """
+    try: 
+        word_file = "/usr/share/dict/words"
+        WORDS = open(word_file).read().splitlines()
+    except: 
+        WORDS = ["Liam", "Ava", "Noah", "Mia", "Ethan", "Sophia", "Mason", "Isabella", "Lucas", "Emma", 
+                "Jackson", "Olivia", "Aiden", "Charlotte", "Elijah", "Amelia", "James", "Harper", "Benjamin"]
     customers = pd.DataFrame({"customer_id": np.arange(1,11), 
                             "customer_age": np.random.uniform(0, 12*3, 10),
                             "customer_name": [WORDS[i] for i in np.random.randint(1, len(WORDS), 10)]})
